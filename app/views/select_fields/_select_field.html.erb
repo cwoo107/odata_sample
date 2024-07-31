@@ -1,0 +1,12 @@
+<div id="<%= dom_id select_field %>">
+  <div class="mt-2 border-t border-gray-100">
+    <dl class="divide-y divide-gray-100">
+      <div class="px-4 py-2 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+        <dt class="text-sm font-medium leading-6 text-gray-900"><%= select_field.field_name %></dt>
+        <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">      <%= button_to "remove field", select_field, method: :delete, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+        </dd>
+      </div>
+    </dl>
+  </div>
+
+</div>

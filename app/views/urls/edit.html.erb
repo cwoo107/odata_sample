@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "url_collection_#{@url.collection_id}" do %>
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">Editing url</h1>
+
+  <%= render "form", url: @url, collection: @url.collection_id %>
+
+  <%= link_to "cancel", @url.collection, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+</div>
+<% end %>

@@ -1,0 +1,56 @@
+<%= form_with(model: filter, class: "contents") do |form| %>
+  <% if filter.errors.any? %>
+    <div id="error_explanation" class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2><%= pluralize(filter.errors.count, "error") %> prohibited this filter from being saved:</h2>
+
+      <ul>
+        <% filter.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+    <%= form.hidden_field :filter_group_id, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+
+  <div class="my-5">
+    <%= form.label :filter_field %>
+    <%= form.text_field :filter_field, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :operator %>
+    <%= form.select :operator,[['eq (=)','eq'],['gt (>)','gt'],['lt (<)','lt'],['ge (>=)','ge'],['le (<=)','le'],['ne (<>)','ge']],{ prompt: 'select one'}, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="my-5">
+    <%= form.label :filter_value %>
+    <%= form.text_field :filter_value, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+  </div>
+
+  <div class="inline">
+    <%= form.submit class: "rounded-md  px-2.5 py-1.5 text-sm text-white font-semibold shadow-sm ring-1 ring-inset bg-blue-600 hover:bg-blue-800" %>
+  </div>
+<% end %>
+
+<div data-controller="modal datetime" class="my-4">
+  <dialog data-modal-target="dialog" class="p-8 rounded-lg backdrop:bg-black/80 min-w-56">
+    <p class=" font-semibold leading-6 text-gray-900">DateTime Helper</p>
+    <p class="text-xs leading-6 text-gray-600">Input a Date & Time value to get the Pelican accepted format</p>
+
+    <div data-controller="clipboard" data-clipboard-success-content-value="Copied!" class="mt-1 text-xs leading-5 text-gray-500 w-full block">
+      <p class="text-sm mt-2 leading-6 text-gray-900">Input:</p>
+
+      <input data-datetime-target="input" data-action="input->datetime#updateFormattedInput" type="datetime-local" class="font-mono min-h-12 text-xs w-full text-gray-200 bg-slate-800 shadow rounded-md outline-none" />
+
+      <p class="mt-2 text-sm leading-6 text-gray-900">Formatted date:</p>
+
+      <input data-datetime-target="formattedInput" data-clipboard-target="source" type="text" readonly class="font-mono min-h-12 text-xs w-full text-gray-200 bg-slate-800 shadow rounded-md outline-none mb-2" />
+      <button type="button" data-action="clipboard#copy" data-clipboard-target="button">Copy to clipboard</button>
+    </div>
+    <button autofocus data-action="modal#close" class="mt-4 rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Close</button>
+  </dialog>
+
+  <button data-action="modal#open" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">date/time helper</button>
+</div>

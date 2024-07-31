@@ -1,0 +1,10 @@
+<%= turbo_frame_tag 'new_collection' do %>
+
+  <div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">New collection</h1>
+
+  <%= render "form", collection: @collection %>
+
+  <%= link_to "Cancel", collections_path, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+</div>
+<% end %>

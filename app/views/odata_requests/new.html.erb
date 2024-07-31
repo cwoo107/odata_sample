@@ -1,0 +1,9 @@
+<%= turbo_frame_tag "new_odata_request" do %>
+<div class="mx-auto md:w-2/3 w-full">
+  <h1 class="font-bold text-4xl">New odata request</h1>
+
+  <%= render "form", odata_request: @odata_request, collection: @collection %>
+
+  <%= link_to "Cancel", @collection, class: "ml-2 rounded-lg py-3 px-5 bg-gray-100 inline-block font-medium" %>
+</div>
+<% end %>

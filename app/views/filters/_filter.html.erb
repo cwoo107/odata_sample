@@ -1,0 +1,8 @@
+<tr class="even:bg-stone-50" id="<%= dom_id filter %>">
+  <td class="whitespace-nowrap py-4 pl-4 pr-3 text-xs font-medium text-gray-900 sm:pl-3"><%= filter.filter_field %></td>
+  <td class="whitespace-nowrap px-3 py-4 text-xs text-gray-500"><%= filter.operator %></td>
+  <td class="whitespace-nowrap px-3 py-4 text-xs text-gray-500"><%= filter.filter_value %></td>
+  <td class="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-3">
+    <%= button_to "remove filter", filter, method: :delete, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+  </td>
+</tr>

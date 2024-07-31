@@ -1,0 +1,29 @@
+<div class="w-full">
+  <% if notice.present? %>
+    <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+  <% end %>
+
+  <% content_for :title, "Collections" %>
+
+  <%= turbo_frame_tag 'new_collection' do %>
+    <div class="flex justify-between items-center">
+      <h1 class="font-bold text-4xl">Collections</h1>
+      <%= link_to "New collection", new_collection_path(collection: @collection), class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+    </div>
+  <% end %>
+    <div id="collections" class="min-w-full ">
+      <div role="list" class="divide-y divide-gray-100">
+        <%= turbo_stream_from @collection %>
+        <% @collections.each do |collection| %>
+          <%= turbo_frame_tag dom_id collection do %>
+            <div class="flex my-2 py-2 bg-white rounded-lg items-center justify-between gap-x-6 p-5 ">
+              <%= render collection %>
+              <div class="flex flex-none items-center gap-x-4">
+                <%= link_to 'view collection', collection, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50", data: {turbo: false} %>
+              </div>
+            </div>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+</div>

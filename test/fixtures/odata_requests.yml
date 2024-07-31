@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  collection: one
+  name: MyString
+  description: MyText
+  base_url: MyString
+  url: MyString
+  authorization: 
+
+two:
+  collection: two
+  name: MyString
+  description: MyText
+  base_url: MyString
+  url: MyString
+  authorization: 

@@ -1,0 +1,60 @@
+<%= turbo_frame_tag "odata_result" do %>
+  <div class="block w-full my-5">
+
+    <div data-controller="tabs" data-tabs-active-tab-class=" rounded-t bg-stone-50">
+      <ul class="list-reset flex ">
+        <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+          <button class=" inline-block py-2 px-4 text-sm text-gray-900 hover:text-slate-700 font-semibold no-underline" href="#">json</button>
+        </li>
+        <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+          <button class=" inline-block py-2 px-4 text-sm text-gray-900 hover:text-slate-700 font-semibold no-underline" href="#">table</button>
+        </li>
+
+      </ul>
+      <div class="hidden py-4 px-4 rounded  bg-stone-50" data-tabs-target="panel">
+        <div data-controller="clipboard" data-clipboard-success-content-value="Copied!" class="mt-1 text-xs leading-5 text-gray-500 w-full block">
+        <textarea class="font-mono min-h-48 text-xs w-full text-gray-200 bg-slate-800 shadow rounded-md  outline-none "
+                  disabled
+                  data-clipboard-target="source"><%= @result %></textarea>
+          <button type="button" data-action="clipboard#copy" data-clipboard-target="button">Copy to clipboard</button>
+        </div>
+      </div>
+      <div class="hidden py-4 px-4 rounded  bg-stone-50" data-tabs-target="panel">
+        <% if @result.present? %>
+          <div class="flex justify-between items-center">
+            <div class="text-left text-xs text-gray-500 mb-4">
+              showing <%= JSON.parse(@result)['value'].count %> of <%= JSON.parse(@result)['@odata.count'] %> results
+            </div>
+          </div>
+          <div class="mx-2 bg-stone-50">
+            <div style="width: 100%; overflow-x: auto;" class="px-4 max-h-screen overflow-y-auto" >
+
+            <table class="min-w-full px-4 divide-y divide-gray-200">
+              <thead>
+              <tr>
+                <% JSON.parse(@result)['value'].first.keys.each do |key| %>
+                  <th class="px-6 py-4 text-left text-xs font-medium text-gray-500 tracking-wider">
+                    <%= key.humanize %>
+                  </th>
+                <% end %>
+              </tr>
+              </thead>
+              <tbody class="mx-4 divide-y divide-gray-200 text-xs">
+              <% JSON.parse(@result)['value'].each do |item| %>
+                <tr>
+                  <% item.values.each do |value| %>
+                    <td class="px-6 py-4 whitespace-no-wrap text-xs">
+                      <%= value %>
+                    </td>
+                  <% end %>
+                </tr>
+              <% end %>
+              </tbody>
+            </table>
+          </div>
+          </div>
+
+      <% end %>
+        </div>
+  </div>
+<% end %>
