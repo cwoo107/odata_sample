@@ -1,4 +1,6 @@
 class FiltersController < ApplicationController
+  include ActionView::RecordIdentifier
+
   before_action :set_filter, only: %i[ show edit update destroy ]
   before_action :authenticate_user!
   # GET /filters or /filters.json
@@ -19,14 +21,18 @@ class FiltersController < ApplicationController
   # POST /filters or /filters.json
   def create
     @filter = Filter.new(filter_params)
+    puts "It didn't hit the save state"
 
     respond_to do |format|
       if @filter.save
+        puts "It hit the save state"
+        format.turbo_stream { render turbo_stream: turbo_stream.replace(dom_id(@filter.filter_group), partial: 'filter_groups/filter_group', locals: { filter_group: @filter.filter_group})}
         format.html { redirect_to @filter.filter_group.odata_request, notice: "Filter was successfully created." }
         format.json { render :show, status: :created, location: @filter }
       else
         format.html { render :new, status: :unprocessable_entity }
         format.json { render json: @filter.errors, status: :unprocessable_entity }
+        pp @filter.errors
       end
     end
   end
@@ -46,10 +52,10 @@ class FiltersController < ApplicationController
 
   # DELETE /filters/1 or /filters/1.json
   def destroy
-    odata_request = @filter.filter_group.odata_request
-    @filter.destroy
+    @filter.destroy!
 
     respond_to do |format|
+      format.turbo_stream { render(turbo_stream: turbo_stream.remove(dom_id(@filter))) }
       format.html { redirect_to odata_request, notice: "Filter was successfully destroyed." }
       format.json { head :no_content }
     end

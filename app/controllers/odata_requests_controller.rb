@@ -53,7 +53,6 @@ class OdataRequestsController < ApplicationController
     @odata_request.destroy
 
     respond_to do |format|
-      format.turbo_stream { render turbo_stream: turbo_stream.remove(@odata_request)}
       format.html { redirect_to collection, notice: "Odata request was successfully destroyed." }
       format.json { head :no_content }
     end

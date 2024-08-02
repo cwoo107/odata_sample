@@ -1,83 +1,85 @@
-<%= turbo_frame_tag dom_id @odata_request do %>
+<%= turbo_frame_tag "request_#{@odata_request.id}" do %>
 
-<div class="rounded-lg p-5 my-2 py-2 bg-white">
-  <div class="">
-    <% if notice.present? %>
-      <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
-    <% end %>
-
-    <%= render @odata_request %>
-    <%= render partial: 'odata_requests/code_blocks', locals: { odata_request: @odata_request} %>
-
-
-
-    <%= link_to "Edit", edit_odata_request_path(@odata_request), class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
-    <%= link_to "Close", @odata_request.collection, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+  <div class="rounded-lg p-5 my-2 py-2 bg-white">
+    <%= link_to "close request details", @odata_request.collection, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
     <div class="inline-block ml-2">
-      <%= button_to "Delete this odata request", @odata_request, method: :delete, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50" %>
+      <%= button_to "Delete this odata request", @odata_request, method: :delete, class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-900 shadow-sm ring-1 ring-inset ring-red-300 hover:bg-red-50", data: {turbo: false} %>
     </div>
-  </div>
-
-  <div class="my-8 py-8">
-    <%= link_to "Test Request",
-                odata_test_url_path(url: @odata_request.base_url, credentials: @odata_request.collection.credential.id),
-                data: { turbo_frame: "test_odata" },
-                class: 'rounded-md bg-white px-2.5 py-1.5 text-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
-
-    <%= turbo_frame_tag "test_odata" do %>
-      <!-- This will be replaced by the loading page and then the result -->
-    <% end %>
-  </div>
-
-  <div class="my-5">
-    <div data-controller="tabs" data-tabs-active-tab-class=" rounded-t bg-stone-50">
-      <ul class="list-reset flex ">
-        <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
-          <button class=" inline-block py-2 px-4 text-sm text-gray-900 hover:text-slate-700 font-semibold no-underline" href="#">Select Fields</button>
-        </li>
-        <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
-          <button class=" inline-block py-2 px-4 text-sm text-gray-900 hover:text-slate-700 font-semibold no-underline" href="#">Filter Groups</button>
-        </li>
-
-      </ul>
+    <div class="">
 
 
-      <div class="hidden py-4 px-4 rounded  bg-stone-50" data-tabs-target="panel">
-        <p class="text-sm font-semibold leading-6 text-gray-900">Select Fields</p>
-        <div data-controller="reveal" data-reveal-hidden-class="hidden">
-          <button data-action="click->reveal#toggle" type="button" class="rounded-md  px-2.5 py-1.5 text-sm text-white font-semibold shadow-sm ring-1 ring-inset bg-blue-600 hover:bg-blue-800">add field +</button>
+      <% if notice.present? %>
+        <p class="py-2 px-3 bg-green-50 mb-5 text-green-500 font-medium rounded-lg inline-block" id="notice"><%= notice %></p>
+      <% end %>
+      <%= turbo_stream_from "odata_request_#{@odata_request.id}" %>
+      <%= render @odata_request %>
 
-          <div data-reveal-target="item" class="hidden m-4">
-            <%= render partial: 'select_fields/form', locals: { select_field: SelectField.new(odata_request_id: @odata_request.id) } %>
+
+      <%= link_to "Edit", edit_odata_request_path(@odata_request), class: "rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50" %>
+
+    </div>
+
+    <div class="my-8 py-8">
+      <%= link_to "Test Request",
+                  odata_test_url_path(url: @odata_request.base_url, credentials: @odata_request.collection.credential.id),
+                  data: { turbo_frame: "test_odata" },
+                  class: 'rounded-md bg-white px-2.5 py-1.5 text-md font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50' %>
+
+      <%= turbo_frame_tag "test_odata" do %>
+        <!-- This will be replaced by the loading page and then the result -->
+      <% end %>
+    </div>
+
+    <div class="my-5">
+      <div data-controller="tabs" data-tabs-active-tab-class=" rounded-t bg-stone-50">
+        <ul class="list-reset flex ">
+          <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+            <button class=" inline-block py-2 px-4 text-sm text-gray-900 hover:text-slate-700 font-semibold no-underline" href="#">Select Fields</button>
+          </li>
+          <li class="-mb-px mr-1" data-tabs-target="tab" data-action="click->tabs#change">
+            <button class=" inline-block py-2 px-4 text-sm text-gray-900 hover:text-slate-700 font-semibold no-underline" href="#">Filter Groups</button>
+          </li>
+
+        </ul>
+
+
+        <div class="hidden py-4 px-4 rounded  bg-stone-50" data-tabs-target="panel">
+          <p class="text-sm font-semibold leading-6 text-gray-900">Select Fields</p>
+          <div data-controller="reveal" data-reveal-hidden-class="hidden">
+            <button data-action="click->reveal#toggle" type="button" class="rounded-md  px-2.5 py-1.5 text-sm text-white font-semibold shadow-sm ring-1 ring-inset bg-blue-600 hover:bg-blue-800">add field +</button>
+
+            <div data-reveal-target="item" class="hidden m-4">
+              <%= render partial: 'select_fields/form', locals: { select_field: SelectField.new(odata_request_id: @odata_request.id) } %>
+            </div>
+          </div>
+          <div class="m-2 p-2 px-4 bg-white rounded-md">
+            <% if @odata_request.select_fields.present? %>
+              <%= render @odata_request.select_fields %>
+            <% end %>
           </div>
         </div>
-        <div class="m-2 p-2 px-4 bg-white rounded-md">
-        <% if @odata_request.select_fields.present? %>
-          <%= render @odata_request.select_fields %>
-        <% end %>
+
+
+        <div class="hidden py-4 px-4 rounded  bg-stone-50" data-tabs-target="panel">
+          <p class="text-sm font-semibold leading-6 text-gray-900">Filter Groups</p>
+          <div class="my-5">
+
+            <%= render partial: 'filter_groups/form', locals: { filter_group: FilterGroup.new(odata_request_id: @odata_request.id) } %>
+
+            <%= turbo_frame_tag "filter_groups_odata_request_#{@odata_request.id}" do %>
+              <% if @odata_request.filter_groups.present? %>
+                <%= render @odata_request.filter_groups %>
+              <% end %>
+            <% end %>
+
+          </div>
         </div>
+
+
+
       </div>
-
-
-      <div class="hidden py-4 px-4 rounded  bg-stone-50" data-tabs-target="panel">
-        <p class="text-sm font-semibold leading-6 text-gray-900">Filter Groups</p>
-        <div class="my-5">
-
-          <%= render partial: 'filter_groups/form', locals: { filter_group: FilterGroup.new(odata_request_id: @odata_request.id) } %>
-
-          <%= turbo_frame_tag "filter_groups_odata_request_#{@odata_request.id}" do %>
-          <% if @odata_request.filter_groups.present? %>
-            <%= render @odata_request.filter_groups %>
-          <% end %>
-          <% end %>
-
-        </div>
-      </div>
-
 
 
     </div>
-
-
-</div>
+  </div>
 <% end %>

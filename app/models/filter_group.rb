@@ -4,9 +4,9 @@ class FilterGroup < ApplicationRecord
   broadcasts_refreshes
 
   after_touch :build_filter_group
-
   private
   def build_filter_group
+    pp filters
     if filters.any?
       self.built_filter_group = ""
       filter_group_array = []
@@ -15,6 +15,10 @@ class FilterGroup < ApplicationRecord
       end
       self.built_filter_group += filter_group_array.join(' and ')
       self.save
+    else
+      self.built_filter_group = nil
+      self.save
     end
+    self.odata_request.touch
   end
 end
