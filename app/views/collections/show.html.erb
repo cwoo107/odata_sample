@@ -99,10 +99,12 @@
         <div class="overflow-hidden ">
           <div class="p-6">
             <div data-controller="reveal" data-reveal-hidden-class="hidden">
-              <button data-action="click->reveal#toggle" type="button" class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Create New Request</button>
+              <button data-action="click->reveal#toggle"
+                      type="button"
+                      class="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">Create New Request</button>
 
               <div data-reveal-target="item" class="hidden mt-4">
-                <%= render 'odata_requests/form', odata_request: @odata_request, collection: @collection.id %>
+                <%= render 'odata_requests/form', odata_request: @odata_request, collection: @collection.id, url: @collection.url %>
               </div>
             </div>
             <div role="list" class="divide-y divide-gray-100">

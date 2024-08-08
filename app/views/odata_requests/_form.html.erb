@@ -11,6 +11,11 @@
     </div>
   <% end %>
 
+  <% if url.nil? %>
+    <div  class="bg-red-50 text-red-500 px-3 py-2 font-medium rounded-lg mt-3">
+      <h2>A Collection URL is required to create a new request</h2>
+    </div>
+    <% end %>
     <%= form.hidden_field :collection_id, value: collection, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
 
   <div class="my-5">
