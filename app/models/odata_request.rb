@@ -7,15 +7,11 @@ class OdataRequest < ApplicationRecord
   has_many :filters, through: :filter_groups, dependent: :destroy
   after_update_commit -> { broadcast_replace_to("odata_request_#{self.id}") }
 
-  before_commit :build_on_request
+  before_create :build_url
+  before_update :build_url
   after_touch :build_on_touch
 
   private
-
-  def build_on_request
-    build_url
-  end
-
   def build_on_touch
     self.update!(updated_at: DateTime.now)
   end
