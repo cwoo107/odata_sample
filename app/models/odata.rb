@@ -13,7 +13,9 @@ class Odata
     request = Net::HTTP::Get.new(url)
     request["Authorization"] = "Basic #{Base64.strict_encode64("#{username}:#{password}")}"
 
+    pp request
     response = https.request(request)
+    pp response
     response.read_body
   end
 end
